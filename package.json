@@ -1,0 +1,16 @@
+{
+  "name": "traffic",
+  "version": "0.0.1-3",
+  "dependencies": {
+    "express": "3.x",
+    "websocket": "latest",
+    "ejs": "latest"
+  },
+  "subdomain": "traffic.traffic",
+  "scripts": {
+    "start": "server.js"
+  },
+  "engines": {
+    "node": "0.8.x"
+  }
+}

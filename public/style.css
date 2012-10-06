@@ -1,0 +1,46 @@
+body {
+    background: #3D3331;
+    color: #E2E5EE;
+    font-family: Quantico, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    margin: 0px;
+}
+
+a {
+    color: #E2E5EE;
+    text-decoration: none;
+}
+
+.title {
+    display: block;
+    width: 400px;
+    font-size: 72px;
+    margin: 5px auto 75px auto;
+    text-align: center;
+}
+
+.button {
+    display: block;
+    width: 200px;
+    height: 100px;
+    line-height: 100px;
+    font-size: 36px;
+    margin: 0px auto 0px auto;
+    text-align: center;
+    background: #B8DC3C;
+    color: #3D3331;
+    border: 7px solid #B8DC3C;
+}
+
+.button:active {
+    border-color: #87A730;
+}
+
+#graph {
+    display: block;
+    width: 300px;
+    height: 100px;
+    margin: 10px auto 0px auto;
+    border-bottom: 1px solid #B8DC3C;
+}
