@@ -13,6 +13,8 @@ app.use(express.static(__dirname + '/public'));
 
 var srv = app.listen(3000);
 
+console.log("Ready!");
+
 /*
  * Websocket time!
  */
@@ -25,7 +27,7 @@ ws = new WebSocketServer({
     httpServer: srv,
 });
 
-// Create a functino to handle button pushes
+// Create a function to handle button pushes
 function push_button() {
     // Loop through each connection and send a push event
     for(var i in connections) {
@@ -34,6 +36,18 @@ function push_button() {
         }));
     }
 }
+
+// Handle bar shifting
+function shift_bars() {
+    for(var i in connections) {
+        connections[i].sendUTF(JSON.stringify({
+            a: "shift"
+        }));
+    }
+}
+
+// Set an interval to shift bars every 10 seconds
+setInterval(shift_bars, 10000);
 
 ws.on("request", function(req) {
     // Accept the connection and push it to the connection array
@@ -46,7 +60,7 @@ ws.on("request", function(req) {
         msg = JSON.parse(msg.utf8Data);
 
         if(msg.a == "push")
-            push_button();
+            push_button(connections);
     });
 
     conn.on("close", function(code, desc) {

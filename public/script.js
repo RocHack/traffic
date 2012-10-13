@@ -17,6 +17,7 @@ var Traffic = (function() {
     var BAR_PADDING = 0;
     var bars = [0,0,0,0,0,0];
     var current = 0;
+
     /*
      * Run when the window is ready
      */
@@ -30,8 +31,25 @@ var Traffic = (function() {
         button.onclick = pressButton;
 
         // Setup the WebSocket connection
-        ws = new WebSocket("ws://"+document.domain+"/", "traffic");
+        ws = new WebSocket("ws://"+document.domain+":"+window.location.port+"/", "traffic");
         ws.onmessage = recvPush;
+    }
+
+    /*
+     * Shifts all bars to the left. Should be called every 10 seconds
+     * by the server
+     */
+    var moveLeft = function() {
+        // Shift the array
+        bars.pop();
+        bars.unshift(0);
+        
+        // Re-render the histogram
+        renderBars();
+
+        // Update current
+        var now = parseInt(timestamp() / 10) * 10;
+        current = now;
     }
 
     /*
@@ -88,22 +106,24 @@ var Traffic = (function() {
     }
 
     /*
-     * Callback when the websocket receives 
+     * Run every time the server sends a new click
      */
-    var recvPush = function() {
+    var newClick = function() {
         var now = parseInt(timestamp() / 10) * 10;
 
-        if(current != now) {
-            console.log("adjusting (" + current + " -> " + now +")");
-            current = now;
-            bars.pop();
-            bars.unshift(0);
-        }
-
-        console.log(bars);
         bars[0] += 1;
 
         renderBars();
+    }
+
+    /*
+     * Callback when the websocket receives 
+     */
+    var recvPush = function(msg) {
+        var data = JSON.parse(msg.data);
+
+        if(data.a == "push") newClick();
+        else if(data.a == "shift") moveLeft();
     }
 
     return {
