@@ -1,10 +1,11 @@
 {
   "name": "traffic",
-  "version": "0.0.1-3",
+  "version": "0.0.1-4",
   "dependencies": {
     "express": "3.x",
     "websocket": "latest",
-    "ejs": "latest"
+    "ejs": "latest",
+    "node-redis": "latest"
   },
   "subdomain": "traffic.traffic",
   "scripts": {
